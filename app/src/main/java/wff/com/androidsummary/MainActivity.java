@@ -34,6 +34,8 @@ import org.xutils.x;
 import java.security.cert.CertificateFactory;
 import java.util.List;
 
+import wff.com.androidsummary.activity.SelfProgressActivity;
+
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
     private Button bindBtn;
@@ -94,10 +96,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         context = this;
         dbDao = new DbImpl(context);
         initView();
-        handProvider();
-        testManager();
-        MyAsycTask myAsycTask = new MyAsycTask();
-        myAsycTask.execute();
+//        handProvider();
+//        testManager();
+//        MyAsycTask myAsycTask = new MyAsycTask();
+//        myAsycTask.execute();
     }
 
     private void testHttps() {
@@ -166,7 +168,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.delete).setOnClickListener(this);
         findViewById(R.id.update).setOnClickListener(this);
         findViewById(R.id.query).setOnClickListener(this);
-        handler.sendEmptyMessageDelayed(GETCOUNT, 1000);
+        findViewById(R.id.progress).setOnClickListener(this);
+//        handler.sendEmptyMessageDelayed(GETCOUNT, 1000);
     }
 
     private void handProvider() {
@@ -240,6 +243,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 } else {
                     Toast.makeText(context, "没有查到数据", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.progress:
+                Intent i=new Intent(context, SelfProgressActivity.class);
+                startActivity(i);
                 break;
         }
     }

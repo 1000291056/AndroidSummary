@@ -1,3 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="SelfProgress">
+        <attr name="SelfProgress_textsize" format="dimension|integer"/>/*进度字体大小*/
+        <attr name="SelfProgress_type">/*进度条类型*/
+            <enum name="circle" value="1"/>
+            <enum name="line" value="0"/>
+        </attr>
+    </declare-styleable>
 </resources>
