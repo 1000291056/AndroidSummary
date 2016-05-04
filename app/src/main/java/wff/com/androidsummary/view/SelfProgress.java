@@ -22,7 +22,8 @@ public class SelfProgress extends View {
     private Context mContext;
     private Paint mPaint;//画笔
     private int mProgress;//进度
-    private int defaultTextSize = 50;//进度字体大小
+    private int defaultTextSize = 50;//进度字体默认大小
+    private int textSize;//进度字体大小
     private static int mRadius;//圆形进度条半径
     private static final int PADDING = 100;//进度条里边框距离;
     private static final int STOKRWIDTH = 10;//进度条里边框距离;
@@ -62,11 +63,12 @@ public class SelfProgress extends View {
         //第2步画进度
         Shader shader = new SweepGradient(0, mRadius, new int[]{Color.GREEN, Color.YELLOW, Color.RED}, null);
         int angel = mProgress * 360 / 100;
-        Log.i(TAG, String.valueOf(angel));
+//        Log.i(TAG, String.valueOf(angel));
         mPaint.setShader(shader);
         canvas.drawArc(new RectF(-mWidth / 2 + PADDING, -mWidth / 2 + PADDING, mWidth / 2 - PADDING, mWidth / 2 - PADDING), -90, angel, false, mPaint);
         //显示进度
-
+        mPaint.reset();
+        mPaint.setTextSize(textSize);
         mPaint.setColor(Color.BLUE);
         mPaint.setStrokeWidth(1);
         mPaint.setStyle(Paint.Style.FILL);
@@ -87,9 +89,8 @@ public class SelfProgress extends View {
         mPaint = new Paint();
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SelfProgress);
-            int textSize = a.getInt(R.styleable.SelfProgress_SelfProgress_textsize, defaultTextSize);
+            textSize = a.getInt(R.styleable.SelfProgress_SelfProgress_textsize, defaultTextSize);
             Log.i(TAG, "进度条字体大小" + textSize);
-            mPaint.setTextSize(textSize);
             type = a.getInt(R.styleable.SelfProgress_SelfProgress_type, 0);
             Log.i(TAG, "进度条类型" + type);
             a.recycle();
