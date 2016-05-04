@@ -31,7 +31,7 @@ public class SelfProgressActivity extends Activity {
                     if (mProgress >= SelfProgress.MAXPROGRESS) {
                         return;
                     }
-                    mProgress++;
+                    mProgress+=2;
                     mHandler.sendEmptyMessageDelayed(1, REFRESHTIME);
                     break;
             }
