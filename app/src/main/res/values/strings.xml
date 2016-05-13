@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidSummary</string>
     <string name="self_progress">自定义进度条</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="pull_to_loadmore">加载更多</string>
+    <string name="pull">上拉下拉</string>
 </resources>

@@ -16,5 +16,6 @@
         android:layout_width="match_parent"
         test:SelfProgress_textsize="80"
         test:SelfProgress_type="circle"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 </LinearLayout>

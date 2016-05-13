@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="wff.com.androidsummary">
+          package="wff.com.androidsummary">
 
     <uses-sdk
         android:maxSdkVersion="22"
         android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="21"/>
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:name=".MyApplication"
@@ -17,16 +17,23 @@
         android:label="@string/app_name">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activity.SelfProgressActivity"></activity>
+        <activity android:name=".activity.PullListViewActivity"/>
 
         <service android:name=".MyService">
 
         </service>
+        <service android:name=".service.TestStartService">
+            <intent-filter>
+                <action android:name="com.androidsummary.service"/>
+            </intent-filter>
+        </service>
+
         <provider
             android:name="wff.com.androidsummary.MyContentProvider"
             android:authorities="wff.com.androidsummary.provider">
