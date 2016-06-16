@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
@@ -61,6 +62,7 @@ import wff.com.androidsummary.activity.PullListViewActivity;
 import wff.com.androidsummary.activity.SelfProgressActivity;
 import wff.com.androidsummary.activity.StackViewActivity;
 import wff.com.androidsummary.activity.TestSurfaceViewActivity;
+import wff.com.androidsummary.matrix.MatrixActivity;
 import wff.com.androidsummary.xutil3tools.BaseActivity;
 
 @ContentView(R.layout.activity_main)
@@ -375,7 +377,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    @Event(value = {R.id.surface, R.id.stackview,R.id.media}, type = View.OnClickListener.class)
+    @Event(value = {R.id.surface, R.id.stackview,R.id.media,R.id.matrix}, type = View.OnClickListener.class)
     private void dealWithClick(View view) {
         switch (view.getId()) {
             case R.id.surface:
@@ -387,6 +389,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.media:
                 Intent media = new Intent(context, MediaActivity.class);
                 startActivity(media);
+                break;
+            case R.id.matrix:
+                Intent matrix = new Intent(context, MatrixActivity.class);
+                startActivity(matrix);
                 break;
         }
     }

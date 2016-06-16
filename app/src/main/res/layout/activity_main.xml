@@ -137,6 +137,12 @@
                 android:layout_height="wrap_content"
                 android:text="media"/>
 
+            <Button
+                android:id="@+id/matrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="matrix"/>
+
         </LinearLayout>
     </ScrollView>
 
