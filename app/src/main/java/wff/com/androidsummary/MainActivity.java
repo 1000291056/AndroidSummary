@@ -1,22 +1,31 @@
 package wff.com.androidsummary;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.provider.UserDictionary;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,23 +33,48 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.xutils.common.util.LogUtil;
+import org.xutils.image.ImageOptions;
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.File;
 import java.security.cert.CertificateFactory;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
+import wff.com.androidsummary.activity.MediaActivity;
+import wff.com.androidsummary.activity.PullListViewActivity;
 import wff.com.androidsummary.activity.SelfProgressActivity;
+import wff.com.androidsummary.activity.StackViewActivity;
+import wff.com.androidsummary.activity.TestSurfaceViewActivity;
+import wff.com.androidsummary.xutil3tools.BaseActivity;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+@ContentView(R.layout.activity_main)
+public class MainActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, View.OnTouchListener {
     private static final String TAG = MainActivity.class.getName();
     private Button bindBtn;
     private Button unbindBtn;
+    @ViewInject(R.id.surface)
+    private Button surfaceBtn;
+    @ViewInject(R.id.stackview)
+    private Button stackViewBtn;
     private EditText nameEtv;
+    @ViewInject(R.id.gif)
+    private ImageView gifImv;
     private EditText ageEtv;
     private EditText idEtv;
     private TextView queryResultTv;
@@ -53,6 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private DbDao dbDao;
     int lastX = 0;
     int lastY = 0;
+    private GestureDetector mGestureDetector;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -92,14 +127,80 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         context = this;
         dbDao = new DbImpl(context);
         initView();
+        Toast.makeText(this, new Gson().toJson(4.9E-324D), Toast.LENGTH_LONG).show();
+//        if (Build.VERSION.SDK_INT >= 23) {//6.0
+//            int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+//            if (permission != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 123);
+//                return;
+//            } else {
+//                callDirectly("111111");
+//
+//            }
+//        } else {
+//            callDirectly("111111");
+//        }
+        /********************闹钟********************************/
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        PendingIntent pendingIntent=PendingIntent.getActivity();
+//        alarmManager.set(AlarmManager.RTC_WAKEUP,10);
+//        Title
 //        handProvider();
 //        testManager();
-//        MyAsycTask myAsycTask = new MyAsycTask();
-//        myAsycTask.execute();
+//        MotionEvent
+        MyAsycTask myAsycTask = new MyAsycTask();
+        myAsycTask.execute();
+        Message message = new Message();
+        mGestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                LogUtil.i("刚刚手指接触到触摸屏的那一刹那，就是触的那一下");
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+                LogUtil.i("手指按在触摸屏上，它的时间范围在按下起效，在长按之前");
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                LogUtil.i("手指离开触摸屏的那一刹那");
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                LogUtil.i("手指在触摸屏上滑动");
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                LogUtil.i("手指按在持续一段时间，并且没有松开");
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                LogUtil.i("手指在触摸屏上迅速移动，并松开的动作");
+                return false;
+            }
+        });
+        getWindow().getDecorView().setOnTouchListener(this);
+//        message.
+//        ExecutorService
+//        ThreadPoolExecutor
+//        Executors
+    }
+
+    private void callDirectly(String mobile) {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.CALL");
+        intent.setData(Uri.parse("tel:" + mobile));
+        startActivity(intent);
     }
 
     private void testHttps() {
@@ -150,8 +251,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
         windowManager.addView(view, params);
-        WifiManager wifiManager= (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> scanResults= wifiManager.getScanResults();
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        List<ScanResult> scanResults = wifiManager.getScanResults();
 //        windowManager.updateViewLayout(view, params);
     }
 
@@ -162,6 +263,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         ageEtv = (EditText) findViewById(R.id.age);
         idEtv = (EditText) findViewById(R.id.id);
         queryResultTv = (TextView) findViewById(R.id.queryresult);
+        bindBtn.setOnTouchListener(this);
         bindBtn.setOnClickListener(this);
         unbindBtn.setOnClickListener(this);
         findViewById(R.id.insert).setOnClickListener(this);
@@ -169,6 +271,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.update).setOnClickListener(this);
         findViewById(R.id.query).setOnClickListener(this);
         findViewById(R.id.progress).setOnClickListener(this);
+        findViewById(R.id.pullBtn).setOnClickListener(this);
+        ImageOptions imageOptions = new ImageOptions.Builder()
+                // 加载中或错误图片的ScaleType
+                //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
+                // 默认自动适应大小
+                // .setSize(...)
+                .setIgnoreGif(false)
+                // 如果使用本地文件url, 添加这个设置可以在本地文件更新后刷新立即生效.
+                //.setUseMemCache(false)
+                .setImageScaleType(ImageView.ScaleType.CENTER).build();
+//        x.image().bind(gifImv, "file:///android_asset/a.gif", imageOptions);
 //        handler.sendEmptyMessageDelayed(GETCOUNT, 1000);
     }
 
@@ -193,6 +306,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (true) {
+            return;
+        }
         String name = "";
         String age = "";
         String id = "";
@@ -245,9 +361,51 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.progress:
-                Intent i=new Intent(context, SelfProgressActivity.class);
+                Intent i = new Intent(context, SelfProgressActivity.class);
                 startActivity(i);
                 break;
+            case R.id.pullBtn:
+                Intent iPull = new Intent(context, PullListViewActivity.class);
+                startActivity(iPull);
+                break;
+            case R.id.media:
+                Intent media = new Intent(context, MediaActivity.class);
+                startActivity(media);
+                break;
         }
+    }
+
+    @Event(value = {R.id.surface, R.id.stackview,R.id.media}, type = View.OnClickListener.class)
+    private void dealWithClick(View view) {
+        switch (view.getId()) {
+            case R.id.surface:
+                startActivity(new Intent(MainActivity.this, TestSurfaceViewActivity.class));
+                break;
+            case R.id.stackview:
+                startActivity(new Intent(MainActivity.this, StackViewActivity.class));
+                break;
+            case R.id.media:
+                Intent media = new Intent(context, MediaActivity.class);
+                startActivity(media);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (mGestureDetector != null) {
+            mGestureDetector.onTouchEvent(event);
+        }
+        return false;
     }
 }

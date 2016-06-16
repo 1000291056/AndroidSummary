@@ -3,12 +3,17 @@
           package="wff.com.androidsummary">
 
     <uses-sdk
-        android:maxSdkVersion="22"
+        android:maxSdkVersion="23"
         android:minSdkVersion="14"
         android:targetSdkVersion="21"/>
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -24,6 +29,9 @@
         </activity>
         <activity android:name=".activity.SelfProgressActivity"></activity>
         <activity android:name=".activity.PullListViewActivity"/>
+        <activity android:name=".activity.TestSurfaceViewActivity"/>
+        <activity android:name=".activity.StackViewActivity"/>
+        <activity android:name=".activity.MediaActivity"/>
 
         <service android:name=".MyService">
 

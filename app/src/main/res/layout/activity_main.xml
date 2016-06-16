@@ -101,6 +101,12 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/gif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
             <Button
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
@@ -112,6 +118,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pull"/>
+
+            <Button
+                android:id="@+id/surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/surfave"/>
+
+            <Button
+                android:id="@+id/stackview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stackview"/>
+
+            <Button
+                android:id="@+id/media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="media"/>
 
         </LinearLayout>
     </ScrollView>
