@@ -3,6 +3,8 @@ package wff.com.androidsummary;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -11,6 +13,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
@@ -63,6 +66,7 @@ import wff.com.androidsummary.activity.SelfProgressActivity;
 import wff.com.androidsummary.activity.StackViewActivity;
 import wff.com.androidsummary.activity.TestSurfaceViewActivity;
 import wff.com.androidsummary.matrix.MatrixActivity;
+import wff.com.androidsummary.receiver.MyReceiver;
 import wff.com.androidsummary.xutil3tools.BaseActivity;
 
 @ContentView(R.layout.activity_main)
@@ -132,7 +136,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         context = this;
         dbDao = new DbImpl(context);
         initView();
-        Toast.makeText(this, new Gson().toJson(4.9E-324D), Toast.LENGTH_LONG).show();
 //        if (Build.VERSION.SDK_INT >= 23) {//6.0
 //            int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
 //            if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -377,7 +380,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    @Event(value = {R.id.surface, R.id.stackview,R.id.media,R.id.matrix}, type = View.OnClickListener.class)
+    @Event(value = {R.id.surface, R.id.stackview, R.id.media, R.id.matrix, R.id.notification}, type = View.OnClickListener.class)
     private void dealWithClick(View view) {
         switch (view.getId()) {
             case R.id.surface:
@@ -393,6 +396,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.matrix:
                 Intent matrix = new Intent(context, MatrixActivity.class);
                 startActivity(matrix);
+                break;
+            case R.id.notification:
+                notification();
+                break;
+            default:
+                LogUtil.i("无效点击");
                 break;
         }
     }
@@ -413,5 +422,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mGestureDetector.onTouchEvent(event);
         }
         return false;
+    }
+
+    private void notification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = null;
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("吴飞飞");
+        builder.setContentText("是屌丝");
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setTicker("是是是是的");
+        builder.setAutoCancel(true);
+        Intent intent = new Intent(this, MyReceiver.class);
+        intent.setAction(MyReceiver.ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            notification = builder.build();
+        } else {
+            notification = builder.getNotification();
+        }
+        notificationManager.notify(111, notification);
+
     }
 }

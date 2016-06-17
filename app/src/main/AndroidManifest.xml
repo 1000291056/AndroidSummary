@@ -4,7 +4,7 @@
 
     <uses-sdk
         android:maxSdkVersion="23"
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="21"/>
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -50,6 +50,9 @@
             android:authorities="wff.com.androidsummary.provider">
 
         </provider>
+        <receiver android:name="wff.com.androidsummary.receiver.MyReceiver">
+
+        </receiver>
     </application>
 
 </manifest>
