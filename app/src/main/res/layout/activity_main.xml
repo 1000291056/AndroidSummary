@@ -149,6 +149,11 @@
                 android:layout_height="wrap_content"
                 android:text="notification"/>
 
+            <Button
+                android:id="@+id/take_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="take_photo"/>
         </LinearLayout>
     </ScrollView>
 

@@ -34,6 +34,7 @@
         <activity android:name=".activity.TestSurfaceViewActivity"/>
         <activity android:name=".activity.StackViewActivity"/>
         <activity android:name=".activity.MediaActivity"/>
+        <activity android:name=".activity.CameraActvity"/>
         <activity android:name=".matrix.MatrixActivity"/>
 
         <service android:name=".MyService">

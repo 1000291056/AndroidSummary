@@ -2,6 +2,7 @@ package wff.com.androidsummary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -60,6 +61,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import wff.com.androidsummary.activity.CameraActvity;
 import wff.com.androidsummary.activity.MediaActivity;
 import wff.com.androidsummary.activity.PullListViewActivity;
 import wff.com.androidsummary.activity.SelfProgressActivity;
@@ -195,6 +197,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         getWindow().getDecorView().setOnTouchListener(this);
+        activityManager();
 //        message.
 //        ExecutorService
 //        ThreadPoolExecutor
@@ -380,7 +383,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    @Event(value = {R.id.surface, R.id.stackview, R.id.media, R.id.matrix, R.id.notification}, type = View.OnClickListener.class)
+    @Event(value = {R.id.surface, R.id.stackview, R.id.media, R.id.matrix, R.id.notification,R.id.take_photo}, type = View.OnClickListener.class)
     private void dealWithClick(View view) {
         switch (view.getId()) {
             case R.id.surface:
@@ -399,6 +402,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.notification:
                 notification();
+                break;
+            case R.id.take_photo:
+                Intent cameraactvity = new Intent(context, CameraActvity.class);
+                startActivity(cameraactvity);
                 break;
             default:
                 LogUtil.i("无效点击");
@@ -445,5 +452,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         notificationManager.notify(111, notification);
 
+    }
+    private void activityManager(){
+        ActivityManager activityManager= (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            activityManager.getAppTasks();
+//        }
+       List<ActivityManager.RunningAppProcessInfo> appProcessInfos= activityManager.getRunningAppProcesses();
     }
 }
