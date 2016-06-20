@@ -33,8 +33,8 @@
         <activity android:name=".activity.PullListViewActivity"/>
         <activity android:name=".activity.TestSurfaceViewActivity"/>
         <activity android:name=".activity.StackViewActivity"/>
-        <activity android:name=".activity.MediaActivity"/>
-        <activity android:name=".activity.CameraActvity"/>
+        <activity android:name=".activity.CameraVideoActivity"/>
+        <activity android:name=".activity.CameraPictureActvity"/>
         <activity android:name=".matrix.MatrixActivity"/>
 
         <service android:name=".MyService">

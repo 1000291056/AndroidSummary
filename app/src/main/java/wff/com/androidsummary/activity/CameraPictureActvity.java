@@ -19,9 +19,10 @@ import wff.com.androidsummary.xutil3tools.BaseActivity;
 
 /**
  * Created by wufeifei on 2016/6/20.
+ * 拍照
  */
 @ContentView(R.layout.activity_camera_layout)
-public class CameraActvity extends BaseActivity {
+public class CameraPictureActvity extends BaseActivity {
     private Camera mCamera;
     @ViewInject(R.id.camera_preview)
     private FrameLayout cameraPreviewFrameLayout;

@@ -1,7 +1,5 @@
 package wff.com.androidsummary;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -12,8 +10,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -25,18 +21,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.provider.Settings;
-import android.provider.UserDictionary;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -45,24 +35,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import org.xutils.common.util.LogUtil;
 import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import java.io.File;
-import java.security.cert.CertificateFactory;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
-import wff.com.androidsummary.activity.CameraActvity;
-import wff.com.androidsummary.activity.MediaActivity;
+import wff.com.androidsummary.activity.CameraPictureActvity;
+import wff.com.androidsummary.activity.CameraVideoActivity;
 import wff.com.androidsummary.activity.PullListViewActivity;
 import wff.com.androidsummary.activity.SelfProgressActivity;
 import wff.com.androidsummary.activity.StackViewActivity;
@@ -377,7 +359,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(iPull);
                 break;
             case R.id.media:
-                Intent media = new Intent(context, MediaActivity.class);
+                Intent media = new Intent(context, CameraVideoActivity.class);
                 startActivity(media);
                 break;
         }
@@ -393,7 +375,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(new Intent(MainActivity.this, StackViewActivity.class));
                 break;
             case R.id.media:
-                Intent media = new Intent(context, MediaActivity.class);
+                Intent media = new Intent(context, CameraVideoActivity.class);
                 startActivity(media);
                 break;
             case R.id.matrix:
@@ -404,7 +386,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 notification();
                 break;
             case R.id.take_photo:
-                Intent cameraactvity = new Intent(context, CameraActvity.class);
+                Intent cameraactvity = new Intent(context, CameraPictureActvity.class);
                 startActivity(cameraactvity);
                 break;
             default:

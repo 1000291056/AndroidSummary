@@ -22,9 +22,10 @@ import wff.com.androidsummary.xutil3tools.BaseActivity;
 
 /**
  * Created by wufeifei on 2016/6/16.
+ * 录制视频
  */
 @ContentView(R.layout.activity_media_layout)
-public class MediaActivity extends BaseActivity {
+public class CameraVideoActivity extends BaseActivity {
     @ViewInject(R.id.surfaceView)
     private SurfaceView mSurfaceView;
     private Camera mCamera;
